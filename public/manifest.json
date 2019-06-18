@@ -1,7 +1,7 @@
 {
 	"update_url": "https://clients2.google.com/service/update2/crx",
 	"manifest_version": 2,
-	"name": "crx-vue手脚架",
+	"name": "__MSG_appName__",
 	"version": "1.2.6",
 	"default_locale": "en",
 	"description": "crx-vue手脚架",

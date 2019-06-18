@@ -10,4 +10,7 @@ declare global {
       [elem: string]: any
     }
   }
+
+  const chrome:any
 }
+
