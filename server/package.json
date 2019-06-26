@@ -1,0 +1,55 @@
+{
+  "name": "typeorm-typescript-koa-example",
+  "version": "0.0.1",
+  "description": "Example how to use Koa and TypeORM with TypeScript.",
+  "license": "MIT",
+  "readmeFilename": "README.md",
+  "author": {
+    "name": "Umed Khudoiberdiev",
+    "email": "pleerock.me@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/typeorm/typescript-koa-example.git"
+  },
+  "bugs": {
+    "url": "https://github.com/typeorm/typescript-koa-example/issues"
+  },
+  "tags": [
+    "orm",
+    "typescript",
+    "typescript-orm",
+    "typeorm-sample",
+    "typeorm-example",
+    "typeorm-koa-example"
+  ],
+  "devDependencies": {
+    "@types/koa": "^2.0.45",
+    "@types/koa-bodyparser": "^4.2.0",
+    "@types/koa-router": "^7.0.27",
+    "@types/node": "^9.6.5",
+    "gulp": "^4.0.2",
+    "gulp-cli": "^2.2.0",
+    "gulp-typescript": "^5.0.1",
+    "nodemon": "^1.19.1",
+    "ts-loader": "^6.0.3",
+    "ts-node": "^8.3.0",
+    "typescript": "^2.9.2"
+  },
+  "dependencies": {
+    "class-validator": "^0.9.1",
+    "koa": "^2.5.0",
+    "koa-bodyparser": "^4.2.0",
+    "koa-router": "^7.4.0",
+    "koa-session2": "^2.2.10",
+    "mongodb": "^3.2.7",
+    "mysql": "^2.15.0",
+    "svg-captcha": "^1.4.0",
+    "typeorm": "^0.2.0",
+    "xss": "^0.3.3"
+  },
+  "scripts": {
+    "server": "ts-node ./src/index.ts",
+    "watch-serve": "nodemon --watch './src/**/*' -e ts,tsx --exec ts-node ./src/index.ts"
+  }
+}

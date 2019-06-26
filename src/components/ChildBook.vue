@@ -1,6 +1,5 @@
 <template lang="pug">
   .child-book(v-if='isShowChild')
-    Mask
     MaskComponent
     .container
       .title

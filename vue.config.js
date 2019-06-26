@@ -1,4 +1,42 @@
+const path = require('path');
+function resolve(dir) {
+  return path.join(__dirname, dir);
+}
+
+
+function addStyleResource(rule) {
+  rule.use('style-resource')
+  .loader('style-resources-loader')
+  .options({
+    patterns: [
+      path.resolve(__dirname, './src/assets/style/global.styl'),
+    ],
+  });
+}
+
 module.exports = {
+  devServer: {
+    disableHostCheck: true,
+    proxy: {
+      '/api': {
+        target: 'http://127.0.0.1:5010/',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/api': '',
+        },
+      },
+    },
+  },
+  chainWebpack: (config) => {
+    config.resolve.alias
+    .set('@/views', resolve('src/views'))
+    .set('@/assets', resolve('src/assets'))
+    .set('@/components', resolve('src/components'))
+    .set('@/utils', resolve('src/utils'));
+
+    const types = ['vue-modules', 'vue', 'normal-modules', 'normal'];
+    types.forEach(type => addStyleResource(config.module.rule('stylus').oneOf(type)));
+  },
   pages: {
     popup: {
       entry: 'src/popup.ts',

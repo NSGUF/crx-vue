@@ -1,6 +1,11 @@
 <template lang="pug">
   div#popup
     .container
+      .user-info
+        span.login-btn(@click="openLoginPage" v-if='username==="未登录"') 登录
+        span.login-btn(@click="openRegisterPage" v-if='username==="未登录"') 注册
+        span.login-btn(@click="updateBookmarks") 同步
+        span.login-btn 用户名：{{username}}
       .history 今天打开过{{historyNum}}个书签
       input(type='text' placeholder='搜索|多个关键字用空格分隔')
       .bookmarks(v-for="(item, index) in bookmarks")
@@ -13,19 +18,36 @@
               img.logo( :src="'chrome://favicon/'+childItem.url")
               span {{childItem.title}}
       ChildBook(:isShowChild="isShowChild" :selectedChildItem="selectedChildItem" v-on:closeChildBook="closeChildBook" v-on:changeChildBook="changeChildBook")
+      Login(v-on:closeLoginPage="closeLoginPage" :isShowLoginPage="isShowLoginPage")
+      Register(v-on:closeRegisterPage="closeRegisterPage" :isShowRegisterPage="isShowRegisterPage")
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
-import ChildBook from './components/ChildBook.vue';
+  import {Component, Vue} from 'vue-property-decorator';
+  import ChildBook from './components/ChildBook.vue';
+  import Login from './components/Login.vue';
+  import Register from './components/Register.vue';
+  import PopupApi from './apis/PopupApi'
+  import AjaxResponse = Response.AjaxResponse
 
   @Component({
     components: {
       ChildBook,
+      Login,
+      Register,
     },
   })
-export default class App extends Vue {
+  export default class App extends Vue {
+
+    username: string = '未登录'
+
+    popupApi: PopupApi = new PopupApi()
+
     historyNum: number = 0;
+
+    isShowLoginPage: boolean = false;
+
+    isShowRegisterPage: boolean = false;
 
     isShowChild: boolean = false;
 
@@ -92,316 +114,6 @@ export default class App extends Vue {
         parentId: '1',
         title: 'Troubleshooting high memory usage with ASP.NET Core on Kubernetes',
         url: 'https://blog.markvincze.com/troubleshooting-high-memory-usage-with-asp-net-core-on-kubernetes/',
-      }, {
-        dateAdded: 1544151998049,
-        id: '20',
-        index: 8,
-        parentId: '1',
-        title: '产品信息统计表 - 禅道',
-        url: 'http://220.231.134.17:81/zentao/report-productinfo.html',
-      }, {
-        dateAdded: 1544152008162,
-        id: '21',
-        index: 9,
-        parentId: '1',
-        title: 'Untitled Board | Trello',
-        url: 'https://trello.com/b/RrTqmjDp/untitled-board',
-      }, {
-        dateAdded: 1544515296500,
-        id: '23',
-        index: 10,
-        parentId: '1',
-        title: "lcomplete's Blog",
-        url: 'http://lcomplete.github.io/',
-      }, {
-        dateAdded: 1545615861383,
-        id: '25',
-        index: 11,
-        parentId: '1',
-        title: 'CSS Modules 用法教程 - 阮一峰的网络日志',
-        url: 'http://www.ruanyifeng.com/blog/2016/06/css_modules.html',
-      }, {
-        dateAdded: 1559205110028,
-        id: '27',
-        index: 12,
-        parentId: '1',
-        title: '安卓手机维修|苹果手机维修|手机刷机解锁|专业维修平台|安心修手机维修',
-        url: 'http://127.0.0.1:8081/chat?workerId=2499',
-      }, {
-        children: [{
-          dateAdded: 1560499065001,
-          id: '33',
-          index: 0,
-          parentId: '29',
-          title: '百度一下，你就知道',
-          url: 'https://www.baidu.com/',
-        }, {
-          dateAdded: 1560499065001,
-          id: '33',
-          index: 0,
-          parentId: '29',
-          title: '百度一下，你就知道',
-          url: 'https://www.baidu.com/',
-        }, {
-          dateAdded: 1560499083297,
-          id: '34',
-          index: 1,
-          parentId: '29',
-          title: 'AcFun弹幕视频网 - 认真你就输啦 (・ω・)ノ- ( ゜- ゜)つロ',
-          url: 'https://www.acfun.cn/',
-        }, {
-          dateAdded: 1560499083297,
-          id: '34',
-          index: 1,
-          parentId: '29',
-          title: 'AcFun弹幕视频网 - 认真你就输啦 (・ω・)ノ- ( ゜- ゜)つロ',
-          url: 'https://www.acfun.cn/',
-        }, {
-          dateAdded: 1560499083297,
-          id: '34',
-          index: 1,
-          parentId: '29',
-          title: 'AcFun弹幕视频网 - 认真你就输啦 (・ω・)ノ- ( ゜- ゜)つロ',
-          url: 'https://www.acfun.cn/',
-        }, {
-          dateAdded: 1560499083297,
-          id: '34',
-          index: 1,
-          parentId: '29',
-          title: 'AcFun弹幕视频网 - 认真你就输啦 (・ω・)ノ- ( ゜- ゜)つロ',
-          url: 'https://www.acfun.cn/',
-        }, {
-          dateAdded: 1560499083297,
-          id: '34',
-          index: 1,
-          parentId: '29',
-          title: 'AcFun弹幕视频网 - 认真你就输啦 (・ω・)ノ- ( ゜- ゜)つロ',
-          url: 'https://www.acfun.cn/',
-        }, {
-          dateAdded: 1560499083297,
-          id: '34',
-          index: 1,
-          parentId: '29',
-          title: 'AcFun弹幕视频网 - 认真你就输啦 (・ω・)ノ- ( ゜- ゜)つロ',
-          url: 'https://www.acfun.cn/',
-        }, {
-          dateAdded: 1560499083297,
-          id: '34',
-          index: 1,
-          parentId: '29',
-          title: 'AcFun弹幕视频网 - 认真你就输啦 (・ω・)ノ- ( ゜- ゜)つロ',
-          url: 'https://www.acfun.cn/',
-        }, {
-          dateAdded: 1560499083297,
-          id: '34',
-          index: 1,
-          parentId: '29',
-          title: 'AcFun弹幕视频网 - 认真你就输啦 (・ω・)ノ- ( ゜- ゜)つロ',
-          url: 'https://www.acfun.cn/',
-        }, {
-          dateAdded: 1560499083297,
-          id: '34',
-          index: 1,
-          parentId: '29',
-          title: 'AcFun弹幕视频网 - 认真你就输啦 (・ω・)ノ- ( ゜- ゜)つロ',
-          url: 'https://www.acfun.cn/',
-        }, {
-          dateAdded: 1560499083297,
-          id: '34',
-          index: 1,
-          parentId: '29',
-          title: 'AcFun弹幕视频网 - 认真你就输啦 (・ω・)ノ- ( ゜- ゜)つロ',
-          url: 'https://www.acfun.cn/',
-        }, {
-          dateAdded: 1560499083297,
-          id: '34',
-          index: 1,
-          parentId: '29',
-          title: 'AcFun弹幕视频网 - 认真你就输啦 (・ω・)ノ- ( ゜- ゜)つロ',
-          url: 'https://www.acfun.cn/',
-        }, {
-          dateAdded: 1560499083297,
-          id: '34',
-          index: 1,
-          parentId: '29',
-          title: 'AcFun弹幕视频网 - 认真你就输啦 (・ω・)ノ- ( ゜- ゜)つロ',
-          url: 'https://www.acfun.cn/',
-        }, {
-          dateAdded: 1560499083297,
-          id: '34',
-          index: 1,
-          parentId: '29',
-          title: 'AcFun弹幕视频网 - 认真你就输啦 (・ω・)ノ- ( ゜- ゜)つロ',
-          url: 'https://www.acfun.cn/',
-        }, {
-          dateAdded: 1560499083297,
-          id: '34',
-          index: 1,
-          parentId: '29',
-          title: 'AcFun弹幕视频网 - 认真你就输啦 (・ω・)ノ- ( ゜- ゜)つロ',
-          url: 'https://www.acfun.cn/',
-        }, {
-          dateAdded: 1560499083297,
-          id: '34',
-          index: 1,
-          parentId: '29',
-          title: 'AcFun弹幕视频网 - 认真你就输啦 (・ω・)ノ- ( ゜- ゜)つロ',
-          url: 'https://www.acfun.cn/',
-        }, {
-          dateAdded: 1560499083297,
-          id: '34',
-          index: 1,
-          parentId: '29',
-          title: 'AcFun弹幕视频网 - 认真你就输啦 (・ω・)ノ- ( ゜- ゜)つロ',
-          url: 'https://www.acfun.cn/',
-        }, {
-          dateAdded: 1560499083297,
-          id: '34',
-          index: 1,
-          parentId: '29',
-          title: 'AcFun弹幕视频网 - 认真你就输啦 (・ω・)ノ- ( ゜- ゜)つロ',
-          url: 'https://www.acfun.cn/',
-        }, {
-          dateAdded: 1560499083297,
-          id: '34',
-          index: 1,
-          parentId: '29',
-          title: 'AcFun弹幕视频网 - 认真你就输啦 (・ω・)ノ- ( ゜- ゜)つロ',
-          url: 'https://www.acfun.cn/',
-        }, {
-          dateAdded: 1560499083297,
-          id: '34',
-          index: 1,
-          parentId: '29',
-          title: 'AcFun弹幕视频网 - 认真你就输啦 (・ω・)ノ- ( ゜- ゜)つロ',
-          url: 'https://www.acfun.cn/',
-        }, {
-          dateAdded: 1560499083297,
-          id: '34',
-          index: 1,
-          parentId: '29',
-          title: 'AcFun弹幕视频网 - 认真你就输啦 (・ω・)ノ- ( ゜- ゜)つロ',
-          url: 'https://www.acfun.cn/',
-        }, {
-          dateAdded: 1560499083297,
-          id: '34',
-          index: 1,
-          parentId: '29',
-          title: 'AcFun弹幕视频网 - 认真你就输啦 (・ω・)ノ- ( ゜- ゜)つロ',
-          url: 'https://www.acfun.cn/',
-        }, {
-          dateAdded: 1560499083297,
-          id: '34',
-          index: 1,
-          parentId: '29',
-          title: 'AcFun弹幕视频网 - 认真你就输啦 (・ω・)ノ- ( ゜- ゜)つロ',
-          url: 'https://www.acfun.cn/',
-        }, {
-          dateAdded: 1560499083297,
-          id: '34',
-          index: 1,
-          parentId: '29',
-          title: 'AcFun弹幕视频网 - 认真你就输啦 (・ω・)ノ- ( ゜- ゜)つロ',
-          url: 'https://www.acfun.cn/',
-        }, {
-          dateAdded: 1560499083297,
-          id: '34',
-          index: 1,
-          parentId: '29',
-          title: 'AcFun弹幕视频网 - 认真你就输啦 (・ω・)ノ- ( ゜- ゜)つロ',
-          url: 'https://www.acfun.cn/',
-        }, {
-          dateAdded: 1560499083297,
-          id: '34',
-          index: 1,
-          parentId: '29',
-          title: 'AcFun弹幕视频网 - 认真你就输啦 (・ω・)ノ- ( ゜- ゜)つロ',
-          url: 'https://www.acfun.cn/',
-        }, {
-          dateAdded: 1560499083297,
-          id: '34',
-          index: 1,
-          parentId: '29',
-          title: 'AcFun弹幕视频网 - 认真你就输啦 (・ω・)ノ- ( ゜- ゜)つロ',
-          url: 'https://www.acfun.cn/',
-        }, {
-          dateAdded: 1560499083297,
-          id: '34',
-          index: 1,
-          parentId: '29',
-          title: 'AcFun弹幕视频网 - 认真你就输啦 (・ω・)ノ- ( ゜- ゜)つロ',
-          url: 'https://www.acfun.cn/',
-        }, {
-          dateAdded: 1560499083297,
-          id: '34',
-          index: 1,
-          parentId: '29',
-          title: 'AcFun弹幕视频网 - 认真你就输啦 (・ω・)ノ- ( ゜- ゜)つロ',
-          url: 'https://www.acfun.cn/',
-        }, {
-          dateAdded: 1560499083297,
-          id: '34',
-          index: 1,
-          parentId: '29',
-          title: 'AcFun弹幕视频网 - 认真你就输啦 (・ω・)ノ- ( ゜- ゜)つロ',
-          url: 'https://www.acfun.cn/',
-        },{
-          children: [{
-            dateAdded: 1560499065001,
-            id: '33',
-            index: 0,
-            parentId: '29',
-            title: '百度一下，你就知道',
-            url: 'https://www.baidu.com/',
-          }, {
-            dateAdded: 1560499065001,
-            id: '33',
-            index: 0,
-            parentId: '29',
-            title: '百度一下，你就知道',
-            url: 'https://www.baidu.com/',
-          }, {
-            dateAdded: 1560499083297,
-            id: '34',
-            index: 1,
-            parentId: '29',
-            title: 'AcFun弹幕视频网 - 认真你就输啦 (・ω・)ノ- ( ゜- ゜)つロ',
-            url: 'https://www.acfun.cn/',
-          }, {
-            dateAdded: 1560499118257,
-            id: '35',
-            index: 2,
-            parentId: '29',
-            title: '主页 | AMAX',
-            url: 'http://www.amaxchina.com/',
-          }],
-          dateAdded: 1559292080192,
-          dateGroupModified: 1560499118257,
-          id: '29',
-          index: 13,
-          parentId: '1',
-          title: 'tes',
-        }, {
-          dateAdded: 1560499118257,
-          id: '35',
-          index: 2,
-          parentId: '29',
-          title: '主页 | AMAX',
-          url: 'http://www.amaxchina.com/',
-        }],
-        dateAdded: 1559292080192,
-        dateGroupModified: 1560499118257,
-        id: '29',
-        index: 13,
-        parentId: '1',
-        title: 'tes',
-      }, {
-        dateAdded: 1560483277260,
-        id: '31',
-        index: 14,
-        parentId: '1',
-        title: '背景页',
-        url: 'chrome-extension://lecldefeeiapdickaghamicjoafbbdba/background.html#',
       }],
       dateAdded: 1450340042983,
       dateGroupModified: 1560499065001,
@@ -410,15 +122,33 @@ export default class App extends Vue {
       parentId: '0',
       title: '书签栏',
     }, {
-    children: [], dateAdded: 1450340042983, id: '3', index: 1, parentId: '0', title: '其他书签',
-  }];
+      children: [], dateAdded: 1450340042983, id: '3', index: 1, parentId: '0', title: '其他书签',
+    }];
 
     closeChildBook() {
-      if (this.selectedChildItemArr.length === 0){
+      if (this.selectedChildItemArr.length === 0) {
         this.isShowChild = false;
       } else {
         this.selectedChildItem = this.selectedChildItemArr.pop();
       }
+    }
+
+    openRegisterPage() {
+      this.isShowRegisterPage = true;
+    }
+
+    closeRegisterPage() {
+      this.isShowRegisterPage = false;
+    }
+
+
+    openLoginPage() {
+      this.isShowLoginPage = true;
+    }
+
+    closeLoginPage(username: string) {
+      this.isShowLoginPage = false;
+      this.username = username;
     }
 
     openChild(child: any[]) {
@@ -430,6 +160,14 @@ export default class App extends Vue {
       this.selectedChildItemArr.push(this.selectedChildItem);
       this.selectedChildItem = child;
       this.isShowChild = true;
+    }
+
+    updateBookmarks() {
+      this.popupApi.updateBookmarks({bookmarks: this.bookmarksTets}).then((res: AjaxResponse) => {
+        alert(res.msg)
+      }).catch((res: AjaxResponse) => {
+        alert(res.msg)
+      });
     }
 
     openBack() {
@@ -488,12 +226,21 @@ export default class App extends Vue {
 
     mounted() {
       // this.bookmarks = this.bookmarksTets;
+
+      this.popupApi.getUserInfo().then((res: AjaxResponse) => {
+        this.username = res.data.username
+      }).catch((res: AjaxResponse) => {
+        console.log(res.msg)
+      })
+
       chrome.bookmarks.getTree((c: any) => {
         this.bookmarks = c[0].children;
         console.log(JSON.stringify(this.bookmarks));
       });
+
+
     }
-}
+  }
 </script>
 <style lang="stylus">
   #popup {
@@ -503,20 +250,28 @@ export default class App extends Vue {
 
     .container {
       padding 10px
+
+      .user-info {
+        margin-bottom 10px;
+
+        .login-btn {
+          cursor pointer;
+          font-size 16px;
+          margin-right 10px;
+        }
+
+        .login-btn:hover {
+          color: mainColor;
+        }
+      }
+
       .history {
         font-size 16px;
         margin-bottom 10px;
       }
 
-      > input {
-        font-size: 14px;
-        box-sizing: border-box;
-        padding: 12px 0px 12px 10px;
-        background: transparent;
-        border: 1px solid #aaa;
-        outline: none;
+      >  input {
         width 100%;
-        margin-bottom 10px;
       }
 
       .bookmarks {
@@ -528,6 +283,7 @@ export default class App extends Vue {
           height 30px;
           line-height 30px;
         }
+
         .clear-fix {
           clear: both;
         }
@@ -586,18 +342,22 @@ export default class App extends Vue {
 
   /* 设置滚动条的样式 */
   ::-webkit-scrollbar {
-    width:2px;
+    width: 2px;
     background-color: #eee;
   }
 
   /* 滚动槽 */
   ::-webkit-scrollbar-track {
-    border-radius:1px;
+    border-radius: 1px;
   }
 
   /* 滚动条滑块 */
   ::-webkit-scrollbar-thumb {
-    border-radius:1px;
-    background:#999;
+    border-radius: 1px;
+    background: #999;
+  }
+
+  input {
+    mainInput()
   }
 </style>
