@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { AxiosRequestConfig, Method, AxiosResponse } from 'axios'
 // import {HashHistory} from "react-router-dom";
+import {optionUrl} from "@/utils/config"
 
 
 const tips: any = {
@@ -17,7 +18,6 @@ export default class Httpjs {
   }
 
   requestExe(url: string, resolve: Function, reject: Function, data = {}, method: Method = 'GET') {
-    const optionUrl = process.env.NODE_ENV === 'production'?'http://127.0.0.1:5010':'/api';
     const config: AxiosRequestConfig = {
       method: method,
       url: optionUrl + url,

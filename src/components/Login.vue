@@ -17,7 +17,7 @@
   import MaskComponent from './common/MaskComponent.vue';
   import PopupApi from '../apis/PopupApi'
   import AjaxResponse = Response.AjaxResponse
-
+  import {optionUrl} from "@/utils/config"
   @Component({
     components: {
       MaskComponent
@@ -31,8 +31,7 @@
     captcha: string = '';
 
     updateCaptcha() {
-      const before = process.env.NODE_ENV === 'production' ? 'http://127.0.0.1:5010' : '/api'
-      this.captcha = before + '/captcha?' + Math.random()
+      this.captcha = optionUrl + '/captcha?' + Math.random()
     }
 
 
@@ -50,6 +49,8 @@
         alert('用户名不能为空')
       } else if (this.password === '') {
         alert('密码不能为空')
+      } else if (this.code === '') {
+        alert('验证码不能为空')
       } else {
         this.popupApi.doLogin({
           username: this.username,
@@ -57,6 +58,10 @@
           code: this.code
         }).then((res: AjaxResponse) => {
           alert(res.msg)
+          this.username = ''
+          this.password = ''
+          this.code = ''
+          this.updateCaptcha()
           this.$emit('closeLoginPage', this.username)
         }).catch((res: AjaxResponse) => {
           alert(res.msg)

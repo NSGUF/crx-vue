@@ -163,7 +163,7 @@
     }
 
     updateBookmarks() {
-      this.popupApi.updateBookmarks({bookmarks: this.bookmarksTets}).then((res: AjaxResponse) => {
+      this.popupApi.updateBookmarks({bookmarks: this.bookmarks}).then((res: AjaxResponse) => {
         alert(res.msg)
       }).catch((res: AjaxResponse) => {
         alert(res.msg)
@@ -237,8 +237,6 @@
         this.bookmarks = c[0].children;
         console.log(JSON.stringify(this.bookmarks));
       });
-
-
     }
   }
 </script>

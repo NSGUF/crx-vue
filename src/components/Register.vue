@@ -15,6 +15,7 @@
   import {Component, Vue, Model} from 'vue-property-decorator';
   import MaskComponent from './common/MaskComponent.vue';
   import PopupApi from '../apis/PopupApi'
+  import {optionUrl} from "@/utils/config"
 
   import AjaxResponse = Response.AjaxResponse
 
@@ -37,9 +38,9 @@
     captcha: string = '';
 
     updateCaptcha() {
-      const before = process.env.NODE_ENV === 'production' ? 'http://127.0.0.1:5010' : '/api'
-      this.captcha = before + '/captcha?' + Math.random()
+      this.captcha = optionUrl + '/captcha?' + Math.random()
     }
+
     closeRegisterPage() {
       this.$emit('closeRegisterPage')
     }
@@ -53,6 +54,8 @@
         alert('确认密码不能为空')
       } else if (this.password !== this.confirmPassword) {
         alert('密码和确认密码不一致')
+      } else if (this.code === '') {
+        alert('验证码不能为空')
       } else {
         this.popupApi.doRegiest({
           username: this.username,
@@ -60,6 +63,11 @@
           code: this.code
         }).then((res: AjaxResponse) => {
           alert(res.msg)
+          this.username = ''
+          this.password = ''
+          this.confirmPassword = ''
+          this.code = ''
+          this.updateCaptcha()
           this.$emit('closeRegisterPage')
         }).catch((res: AjaxResponse) => {
           alert(res.msg)
