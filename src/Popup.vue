@@ -20,6 +20,7 @@
       ChildBook(:isShowChild="isShowChild" :selectedChildItem="selectedChildItem" v-on:closeChildBook="closeChildBook" v-on:changeChildBook="changeChildBook")
       Login(v-on:closeLoginPage="closeLoginPage" :isShowLoginPage="isShowLoginPage")
       Register(v-on:closeRegisterPage="closeRegisterPage" :isShowRegisterPage="isShowRegisterPage")
+
 </template>
 
 <script lang="ts">
@@ -148,7 +149,9 @@
 
     closeLoginPage(username: string) {
       this.isShowLoginPage = false;
-      this.username = username;
+      if(username) {
+        this.username = username;
+      }
     }
 
     openChild(child: any[]) {
@@ -233,10 +236,11 @@
         console.log(res.msg)
       })
 
-      chrome.bookmarks.getTree((c: any) => {
-        this.bookmarks = c[0].children;
-        console.log(JSON.stringify(this.bookmarks));
-      });
+      // chrome.bookmarks.getTree((c: any) => {
+      //   this.bookmarks = c[0].children;
+      //   console.log(JSON.stringify(this.bookmarks));
+      // });
+      this.bookmarks = this.bookmarksTets
     }
   }
 </script>
@@ -245,6 +249,7 @@
     font-family 'Microsoft YaHei UI'
     width 480px
     max-height 600px
+    position: relative;
 
     .container {
       padding 10px

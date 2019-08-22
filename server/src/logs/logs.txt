@@ -1,0 +1,8 @@
+  [90m<--[39m [1mGET[22m [90m/users[39m
+  [90m-->[39m [1mGET[22m [90m/users[39m [32m200[39m [90m1ms[39m [90m2.05kb[39m
+  [90m<--[39m [1mGET[22m [90m/favicon.ico[39m
+  [90m-->[39m [1mGET[22m [90m/favicon.ico[39m [32m200[39m [90m1ms[39m [90m44b[39m
+  [90m<--[39m [1mGET[22m [90m/users[39m
+  [90m-->[39m [1mGET[22m [90m/users[39m [32m200[39m [90m2ms[39m [90m2.05kb[39m
+  [90m<--[39m [1mGET[22m [90m/favicon.ico[39m
+  [90m-->[39m [1mGET[22m [90m/favicon.ico[39m [32m200[39m [90m0ms[39m [90m44b[39m

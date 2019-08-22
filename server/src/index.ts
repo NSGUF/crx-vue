@@ -8,7 +8,11 @@ const session = require("koa-session2");
 import {AppRoutes} from "./routes";
 import User from './entity/user';
 import {tools} from "./controller"
+import * as KoaLogger from 'koa-logger'
+import * as KoaHelmet from 'koa-helmet'
 import {getAjaxResponse, crypt} from "./utils/tools"
+
+import * as fs from 'fs'
 
 // create connection with database
 // note that its not active database connection
@@ -19,6 +23,21 @@ createConnection().then(async connection => {
   const app = new Koa();
   const router: any = new Router();
 
+  app.use(KoaLogger((str, args) => {
+    // redirect koa logger to other output pipe
+    // default is process.stdout(by console.log function)
+    console.log(str)
+    console.log(args)
+
+    // fs.appendFile('./src/logs/logs.txt',`${str}\n`,function (error) {
+    //   if(error){
+    //     console.log(error)
+    //   }else{
+    //     console.log('异步写入ok')
+    //   }
+    // })
+  }))
+  app.use(KoaHelmet())
   router.all('/*', tools.defense);
 
   // register all application routes
